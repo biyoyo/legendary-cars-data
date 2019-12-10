@@ -7,11 +7,12 @@
 		<script src="data/data.js"></script>
 	</head>
 	<body>
-		<button onclick="pie_chart()">Click me</button>
+		<button onclick="pie_chart(fuel_labels, fuel_data, 'Cars by fuel type')">Fuel type</button>
+		<button onclick="pie_chart(age_labels, age_data, 'Cars by age')">Ages</button>
+		<button onclick="line_chart()">Years</button>
 		<div>
 		<canvas id="myPieChart1" width="400" height="400" style="float: left; margin-right: 100px"></canvas>
 		<canvas id="myLineChart" width="400" height="400"></canvas>
-		<canvas id="myPieChart2" width="400" height="400"></canvas>
 		<script src="main.js"></script>
 		</div>
 	</body>

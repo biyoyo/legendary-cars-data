@@ -1,16 +1,89 @@
-var ctx = document.getElementById('myChart').getContext('2d');
+petrol_col = 'rgba(241, 52, 43, 1)'
+gas_col = 'rgba(27, 108, 227, 1)'
+diezel_col = 'rgba(161, 183, 21, 1)'
+electro_col = 'rgba(28, 201, 20, 1)'
+other_col =	'rgba(43, 48, 50, 1)'
+
+var ctx = document.getElementById('myPieChart').getContext('2d');
+current_year = cars_count_data[cars_count_data.length - 1]
+other = current_year[1]
+
+for (i = 2; i < current_year.length; i++)
+{
+	other -= current_year[i]
+}
+
 var myChart = new Chart(ctx, {
-	type: 'line',
+	type: 'pie',
 	data: {
-		labels: ['9', '10', '11'],
+		labels: ['Бензин', 'kinda Газ', 'Дизел', 'Електричество', 'Други'],
 		datasets: [{
 			label: '# of cars',
-			data: [1359569, 1362307, 1362749],
+			data: [current_year[2], current_year[3], current_year[4], current_year[5], other],
+			 backgroundColor: [
+			 	 petrol_col,
+			 	 gas_col,
+			 	 diezel_col,
+			 	 electro_col,
+			 	 other_col,
+            ],
 			borderWidth: 1
 		}]
 	},
 	options: {
 		responsive: false,
+		scales: {
+			yAxes: [{
+				ticks: {
+					beginAtZero: false
+				}
+			}]
+		}
+	}
+});
+
+petrol = [], gas = [], diesel = [], electric = []
+for (i = 0; i < cars_count_data.length; i++)
+{
+	petrol[i] = cars_count_data[i][2]
+	gas[i] = cars_count_data[i][3]
+	diesel[i] = cars_count_data[i][4]
+	electric[i] = cars_count_data[i][5]
+}
+
+var ctx = document.getElementById('myLineChart').getContext('2d');
+
+var myChart = new Chart(ctx, {
+	type: 'line',
+	data: {
+		labels: ['2016', '2017', '2018', '2019'],
+		datasets: [{
+			label: 'Бензин',
+			data: petrol,
+			borderColor: 
+			 	 petrol_col,
+		}, {
+			label: 'Газ',
+			data: gas,
+			borderColor: 
+			 	 gas_col,
+		}, {
+			label: 'Дизел',
+			data: diesel,
+			borderColor: 
+			 	diezel_col,
+		}, {
+			label: 'Електричество',
+			data: electric,
+ 			borderColor: 
+			 	 electro_col,
+		}]
+	},
+	options: {
+		responsive: false,
+		tension: 0,
+		showLine: false,
+		fill: false,
 		scales: {
 			yAxes: [{
 				ticks: {

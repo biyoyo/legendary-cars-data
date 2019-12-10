@@ -16,7 +16,7 @@ for (i = 2; i < current_year.length; i++)
 var myChart = new Chart(ctx, {
 	type: 'pie',
 	data: {
-		labels: ['Бензин', 'kinda Газ', 'Дизел', 'Електричество', 'Други'],
+		labels: ['Бензин', 'Газ', 'Дизел', 'Електричество', 'Други'],
 		datasets: [{
 			label: '# of cars',
 			data: [current_year[2], current_year[3], current_year[4], current_year[5], other],

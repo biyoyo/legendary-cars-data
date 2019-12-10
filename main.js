@@ -4,44 +4,46 @@ diezel_col = 'rgba(161, 183, 21, 1)'
 electro_col = 'rgba(28, 201, 20, 1)'
 other_col =	'rgba(43, 48, 50, 1)'
 
-var ctx = document.getElementById('myPieChart').getContext('2d');
-current_year = cars_count_data[cars_count_data.length - 1]
-other = current_year[1]
-
-for (i = 2; i < current_year.length; i++)
+function pie_chart()
 {
-	other -= current_year[i]
-}
+	var ctx = document.getElementById('myPieChart1').getContext('2d');
+	current_year = cars_count_data[cars_count_data.length - 1]
+	other = current_year[1]
 
-var myChart = new Chart(ctx, {
-	type: 'pie',
-	data: {
-		labels: ['Бензин', 'Газ', 'Дизел', 'Електричество', 'Други'],
-		datasets: [{
-			label: '# of cars',
-			data: [current_year[2], current_year[3], current_year[4], current_year[5], other],
-			 backgroundColor: [
-			 	 petrol_col,
-			 	 gas_col,
-			 	 diezel_col,
-			 	 electro_col,
-			 	 other_col,
-            ],
-			borderWidth: 1
-		}]
-	},
-	options: {
-		responsive: false,
-		scales: {
-			yAxes: [{
-				ticks: {
-					beginAtZero: false
-				}
-			}]
-		}
+	for (i = 2; i < current_year.length; i++)
+	{
+		other -= current_year[i]
 	}
-});
 
+	var myChart = new Chart(ctx, {
+		type: 'pie',
+		data: {
+			labels: ['Бензин', 'Газ', 'Дизел', 'Електричество', 'Други'],
+			datasets: [{
+				label: '# of cars',
+				data: [current_year[2], current_year[3], current_year[4], current_year[5], other],
+				backgroundColor: [
+					petrol_col,
+					gas_col,
+					diezel_col,
+					electro_col,
+					other_col,
+				],
+				borderWidth: 1
+			}]
+		},
+		options: {
+			responsive: false,
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero: false
+					}
+				}]
+			}
+		}
+	});
+}
 petrol = [], gas = [], diesel = [], electric = []
 for (i = 0; i < cars_count_data.length; i++)
 {
@@ -61,22 +63,22 @@ var myChart = new Chart(ctx, {
 			label: 'Бензин',
 			data: petrol,
 			borderColor: 
-			 	 petrol_col,
+			petrol_col,
 		}, {
 			label: 'Газ',
 			data: gas,
 			borderColor: 
-			 	 gas_col,
+			gas_col,
 		}, {
 			label: 'Дизел',
 			data: diesel,
 			borderColor: 
-			 	diezel_col,
+			diezel_col,
 		}, {
 			label: 'Електричество',
 			data: electric,
- 			borderColor: 
-			 	 electro_col,
+			borderColor: 
+			electro_col,
 		}]
 	},
 	options: {
@@ -84,6 +86,43 @@ var myChart = new Chart(ctx, {
 		tension: 0,
 		showLine: false,
 		fill: false,
+		scales: {
+			yAxes: [{
+				ticks: {
+					beginAtZero: false
+				}
+			}]
+		}
+	}
+});
+
+ages = []
+for (i = 0; i < cars_age_data[3].length; i++)
+{
+	ages[i] = cars_age_data[3][i]
+	console.log(ages[i])
+}
+ages.shift()
+var ctx = document.getElementById('myPieChart2').getContext('2d');
+var myChart = new Chart(ctx, {
+	type: 'pie',
+	data: {
+		labels: ['0-5', '6-10', '11-15', '15-20', '20+' ],
+		datasets: [{
+			label: '# of cars',
+			data: ages,
+			backgroundColor: [
+				petrol_col,
+				gas_col,
+				diezel_col,
+				electro_col,
+				other_col,
+			],
+			borderWidth: 1
+		}]
+	},
+	options: {
+		responsive: false,
 		scales: {
 			yAxes: [{
 				ticks: {

@@ -24,44 +24,6 @@ fuel_labels = ['Petrol', 'Gas', 'Diesel', 'Electricity', 'Other']
 fuel_colors = [petrol_col, gas_col, diezel_col, electro_col, other_col]
 fuel_data = [current_year[2], current_year[3], current_year[4], current_year[5], other]
 
-var ctx = document.getElementById('myPieChart1').getContext('2d');
-
-piechart = new Chart(ctx, {
-	type: 'pie',
-	data: {
-		labels: [],
-		datasets: [{
-			label: '# of cars',
-			data:[],
-			backgroundColor: [],
-			borderWidth: 1
-		}]
-	},
-	options: {
-		title: {
-			display: true,
-			text: ""
-		},
-		responsive: false,
-		scales: {
-			yAxes: [{
-				ticks: {
-					beginAtZero: false
-				}
-			}]
-		}
-	}
-});
-
-function pie_chart(m_labels, m_data, m_title, m_colors)
-{
-	piechart.data.labels = m_labels
-	piechart.data.datasets[0].data = m_data
-	piechart.data.datasets[0].backgroundColor = m_colors
-	piechart.options.title.text = m_title
-	piechart.update()
-}
-
 years = ['2016', '2017', '2018', '2019']
 petrol_by_year_labels = ['Petrol', 'Gas', 'Diesel', 'Electricity']
 petrol = [], gas = [], diesel = [], electric = []
@@ -74,8 +36,8 @@ for (i = 0; i < cars_count_data.length; i++)
 }
 
 eco_labels = ['Euro6', 'Euro5', 'Euro4', 'Euro3', 'Euro2', 'Euro1']
-eco_data = [[], [], [], [], [], [], []]
 eco_colors = ['#1976d2', '#0d47a1', '#afb42b', '#827717', '#616161', '#212121']
+eco_data = [[], [], [], [], [], [], []]
 for (i = 0; i < cars_eco_cat_data.length; i++)
 {
 	eco_data[0][i] = cars_eco_cat_data[i][1]
@@ -87,35 +49,79 @@ for (i = 0; i < cars_eco_cat_data.length; i++)
 	eco_data[6][i] = cars_eco_cat_data[i][7]
 }
 
-var ctx = document.getElementById('myLineChart').getContext('2d');
+ctx = document.getElementById('myChart').getContext('2d');
+myChart = new Chart(ctx, {})
 
-myChart = new Chart(ctx, {
-	type: 'line',
-	data: {
-		labels: [],
-		datasets: []
-	},
-	options: {
-		responsive: false,
-		tension: 0,
-		showLine: false,
-		fill: false,
-		title: {
-			display: true,
-			text: "Tendencies through the years"
-		},
-		scales: {
-			yAxes: [{
-				ticks: {
-					beginAtZero: false
-				}
+function pie_chart(m_labels, m_data, m_title, m_colors)
+{
+	myChart.destroy()
+	myChart = new Chart(ctx, {
+		type: 'pie',
+		data: {
+			labels: [],
+			datasets: [{
+				label: '# of cars',
+				data:[],
+				backgroundColor: [],
+				borderWidth: 1
 			}]
+		},
+		options: {
+			title: {
+				display: true,
+				text: ""
+			},
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero: false
+					}
+				}]
+			}
 		}
-	}
-});
+	});
+
+	myChart.data.labels = m_labels
+	myChart.data.datasets = [{
+		label: '# of cars',
+		data: m_data,
+		backgroundColor: m_colors
+	}]
+	myChart.options.title.text = m_title
+	myChart.update()
+}
+
+function line_chart()
+{
+	myChart.destroy()
+	myChart = new Chart(ctx, {
+		type: 'line',
+		data: {
+			labels: [],
+			datasets: []
+		},
+		options: {
+			tension: 0,
+			showLine: false,
+			fill: false,
+			title: {
+				display: true,
+				text: "Tendencies through the years"
+			},
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero: false
+					}
+				}]
+			}
+		}
+	});
+}
 
 function line_chart_fuel()
 {
+	line_chart()
 	myChart.data.labels = years
 	myChart.data.datasets = [{
 		label: 'Petrol',
@@ -143,6 +149,7 @@ function line_chart_fuel()
 
 function line_chart_eco()
 {
+	line_chart()
 	myChart.data.labels = years
 	myChart.data.datasets = [{
 		label: eco_labels[0],
@@ -189,4 +196,3 @@ function pie_chart_age()
 }
 
 pie_chart_fuel()
-line_chart_fuel()

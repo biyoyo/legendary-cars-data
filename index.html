@@ -5,13 +5,19 @@
 		<title>Legendary cars data</title>
 		<script src="Chart.bundle.min.js"></script>
 		<script src="data/data.js"></script>
-
+		<link rel="stylesheet" type="text/css" href="custom.css"/>
 	</head>
 	<body>
-		<button onclick="pie_chart_fuel()">Fuel type</button>
-		<button onclick="pie_chart_age()">Ages</button>
-		<button onclick="line_chart_fuel()">Years</button>
-		<button onclick="line_chart_eco()">Years eco category</button>
+		<div class="toggle" style="display: flex; justify-content: center">
+			<input type="radio" name="chartType" id="line_fuel" checked="checked" onclick="update_chart()"/>
+			<label for="line_fuel">Fuel type over the years</label>
+			<input type="radio" name="chartType" id="pie_fuel" onclick="update_chart()"/>
+			<label for="pie_fuel">Fuel types in 2019</label>
+			<input type="radio" name="chartType" id="pie_age" onclick="update_chart()"/>
+			<label for="pie_age">Cars by age in 2019</label>
+			<input type="radio" name="chartType" id="line_eco" onclick="update_chart()"/>
+			<label for="line_eco">Eco categories over the years</label>
+		</div>
 
 		<div style="position: relative; height:40vh; width:80vw; margin: 0 auto">
 			<canvas id="myChart"></canvas>

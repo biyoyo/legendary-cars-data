@@ -52,7 +52,7 @@ for (i = 0; i < cars_eco_cat_data.length; i++)
 ctx = document.getElementById('myChart').getContext('2d');
 myChart = new Chart(ctx, {})
 
-function pie_chart(m_labels, m_data, m_title, m_colors)
+function pie_chart(m_labels, m_data, m_colors)
 {
 	myChart.destroy()
 	myChart = new Chart(ctx, {
@@ -67,10 +67,6 @@ function pie_chart(m_labels, m_data, m_title, m_colors)
 			}]
 		},
 		options: {
-			title: {
-				display: true,
-				text: ""
-			},
 			scales: {
 				yAxes: [{
 					ticks: {
@@ -87,7 +83,6 @@ function pie_chart(m_labels, m_data, m_title, m_colors)
 		data: m_data,
 		backgroundColor: m_colors
 	}]
-	myChart.options.title.text = m_title
 	myChart.update()
 }
 
@@ -104,10 +99,6 @@ function line_chart()
 			tension: 0,
 			showLine: false,
 			fill: false,
-			title: {
-				display: true,
-				text: "Tendencies through the years"
-			},
 			scales: {
 				yAxes: [{
 					ticks: {
@@ -187,12 +178,25 @@ function line_chart_eco()
 
 function pie_chart_fuel()
 {
-	pie_chart(fuel_labels, fuel_data, 'Cars by fuel type', fuel_colors)
+	pie_chart(fuel_labels, fuel_data, fuel_colors)
 }
 
 function pie_chart_age()
 {
-	pie_chart(age_labels, age_data, 'Cars by age', age_colors)
+	pie_chart(age_labels, age_data, age_colors)
 }
 
-pie_chart_fuel()
+function update_chart()
+{
+	if (document.getElementById('line_fuel').checked) {
+		line_chart_fuel();
+	} else if (document.getElementById('pie_fuel').checked) {
+		pie_chart_fuel();
+	} else if (document.getElementById('pie_age').checked) {
+		pie_chart_age();
+	} else if (document.getElementById('line_eco').checked) {
+		line_chart_eco();
+	}
+}
+
+update_chart()

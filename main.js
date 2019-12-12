@@ -13,15 +13,15 @@ for (i = 2; i < current_year.length; i++)
 }
 
 age_data = []
-for (i = 0; i < cars_age_data[3].length; i++)
+for (i = 0; i < cars_age_data[3].length - 1; i++)
 {
-	age_data[i] = cars_age_data[3][i]
+	age_data[i] = cars_age_data[3][i + 1]
 }
-age_data.shift()
-
 age_labels = ['0-5', '6-10', '11-15', '15-20', '20+']
+age_colors = [electro_col, gas_col, diezel_col, petrol_col, other_col]
 
 fuel_labels = ['Petrol', 'Gas', 'Diesel', 'Electricity', 'Other']
+fuel_colors = [petrol_col, gas_col, diezel_col, electro_col, other_col]
 fuel_data = [current_year[2], current_year[3], current_year[4], current_year[5], other]
 
 var ctx = document.getElementById('myPieChart1').getContext('2d');
@@ -33,13 +33,7 @@ piechart = new Chart(ctx, {
 		datasets: [{
 			label: '# of cars',
 			data:[],
-			backgroundColor: [
-				petrol_col,
-				gas_col,
-				diezel_col,
-				electro_col,
-				other_col,
-			],
+			backgroundColor: [],
 			borderWidth: 1
 		}]
 	},
@@ -59,10 +53,11 @@ piechart = new Chart(ctx, {
 	}
 });
 
-function pie_chart(m_labels, m_data, m_title)
+function pie_chart(m_labels, m_data, m_title, m_colors)
 {
 	piechart.data.labels = m_labels
 	piechart.data.datasets[0].data = m_data
+	piechart.data.datasets[0].backgroundColor = m_colors
 	piechart.options.title.text = m_title
 	piechart.update()
 }
@@ -78,17 +73,18 @@ for (i = 0; i < cars_count_data.length; i++)
 	electric[i] = cars_count_data[i][5]
 }
 
-eco_labels = ['Euro6', 'Euro5', 'Euro4', 'Euro3', 'Euro2', 'Euro1', 'Other']
-e6 = [], e5 = [], e4 = [], e3 = [], e2 = [], e1 = [], o = []
+eco_labels = ['Euro6', 'Euro5', 'Euro4', 'Euro3', 'Euro2', 'Euro1']
+eco_data = [[], [], [], [], [], [], []]
+eco_colors = ['#1976d2', '#0d47a1', '#afb42b', '#827717', '#616161', '#212121']
 for (i = 0; i < cars_eco_cat_data.length; i++)
 {
-	e6[i] = cars_eco_cat_data[i][1]
-	e5[i] = cars_eco_cat_data[i][2]
-	e4[i] = cars_eco_cat_data[i][3]
-	e3[i] = cars_eco_cat_data[i][4]
-	e2[i] = cars_eco_cat_data[i][5]
-	e1[i] = cars_eco_cat_data[i][6]
-	o[i] = cars_eco_cat_data[i][7]
+	eco_data[0][i] = cars_eco_cat_data[i][1]
+	eco_data[1][i] = cars_eco_cat_data[i][2]
+	eco_data[2][i] = cars_eco_cat_data[i][3]
+	eco_data[3][i] = cars_eco_cat_data[i][4]
+	eco_data[4][i] = cars_eco_cat_data[i][5]
+	eco_data[5][i] = cars_eco_cat_data[i][6]
+	eco_data[6][i] = cars_eco_cat_data[i][7]
 }
 
 var ctx = document.getElementById('myLineChart').getContext('2d');
@@ -150,39 +146,47 @@ function line_chart_eco()
 	myChart.data.labels = years
 	myChart.data.datasets = [{
 		label: eco_labels[0],
-		data: e6,
+		data: eco_data[0],
 		borderColor: 
-		petrol_col,
+		eco_colors[0],
 	}, {
 		label: eco_labels[1],
-		data: e5,
+		data: eco_data[1],
 		borderColor: 
-		gas_col,
+		eco_colors[1],
 	}, {
 		label: eco_labels[2],
-		data: e4,
+		data: eco_data[2],
 		borderColor: 
-		diezel_col,
+		eco_colors[2],
 	}, {
 		label: eco_labels[3],
-		data: e3,
+		data: eco_data[3],
 		borderColor: 
-		electro_col,
+		eco_colors[3],
 	}, {
 		label: eco_labels[4],
-		data: e2,
+		data: eco_data[4],
 		borderColor: 
-		electro_col,
+		eco_colors[4],
 	}, {
 		label: eco_labels[5],
-		data: e1,
+		data: eco_data[5],
 		borderColor: 
-		electro_col,
-	}, {
-		label: eco_labels[6],
-		data: o,
-		borderColor: 
-		electro_col,
+		eco_colors[5],
 	}]
 	myChart.update()
 }
+
+function pie_chart_fuel()
+{
+	pie_chart(fuel_labels, fuel_data, 'Cars by fuel type', fuel_colors)
+}
+
+function pie_chart_age()
+{
+	pie_chart(age_labels, age_data, 'Cars by age', age_colors)
+}
+
+pie_chart_fuel()
+line_chart_fuel()
